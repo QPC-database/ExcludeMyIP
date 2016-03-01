@@ -39,7 +39,7 @@ sudo mkdir -p /home/emi
 sudo chown emi /home/emi
 
 echo 'Adding GitHub to known hosts...'
-sudo su -c "ssh-keyscan -H github.com >> .ssh/known_hosts ; chmod 600 .ssh/known_hosts" - emi
+sudo su -c "mkdir .ssh; ssh-keyscan -H github.com >> .ssh/known_hosts ; chmod 600 .ssh/known_hosts" - emi
 
 echo 'Cloning the repository...'
 sudo su -c "git clone https://github.com/mherrmann/ExcludeMyIP.git src" - emi
@@ -48,9 +48,9 @@ sudo su -c 'cd src/ ; git checkout live' - emi
 echo 'Generating Django secret key...'
 sudo apt-get install pwgen
 secret_key=`pwgen -s -y 50 1`
-echo 'SECRET_KEY = """$secret_key"""' > /home/emi/src/excludemyip/secret_key.py
-chown emi:webapps /home/emi/src/excludemyip/secret_key.py
-chmod 400 /home/emi/src/excludemyip/secret_key.py
+echo 'SECRET_KEY = """$secret_key"""' > /home/emi/src/emi/secret_key.py
+chown emi:webapps /home/emi/src/emi/secret_key.py
+chmod 400 /home/emi/src/emi/secret_key.py
 
 echo 'Setting up bash profile for user emi...'
 sudo su -c "ln -sf /home/emi/src/conf/.bashrc /home/emi/.bashrc" - emi
@@ -63,7 +63,7 @@ sudo apt-get install postfix mailutils libsasl2-2 ca-certificates libsasl2-modul
 
 echo 'Configuring Postfix...'
 sudo ln -sf /home/emi/src/conf/postfix/main.cf /etc/postfix/main.cf
-sudo su -c "echo $EMAIL_CONFIG > /home/emi/src/conf/sasl_passwd" - emi
+sudo su -c "echo $EMAIL_CONFIG > /home/emi/src/conf/postfix/sasl_passwd" - emi
 sudo ln -sf /home/emi/src/conf/postfix/sasl_passwd /etc/postfix/sasl_passwd
 sudo su -c "echo -e 'emi' > /etc/mailname"
 sudo chown postfix /etc/mailname

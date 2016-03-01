@@ -4,4 +4,4 @@ db.sqlite3
 *.pyc
 static-collected/
 emi/secret_key.py
-conf/sasl_passwd
+conf/postfix/sasl_passwd
