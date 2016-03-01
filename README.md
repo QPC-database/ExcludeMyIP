@@ -1,5 +1,6 @@
 # ExcludeMyIP
-A Google Analytics tool to exclude your own (home/work) IP.
+A Google Analytics tool to exclude your own (home/work) IP. See it live at
+www.excludemyip.com.
 
 ## Installation
 This web application can be deployed on a bare Ubuntu 14.04 installation
