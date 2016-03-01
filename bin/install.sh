@@ -124,3 +124,6 @@ sudo service nginx start
 
 echo 'Setting up some shortcuts...'
 sudo su -c 'ln -s /home/emi/src/bin/shell.sh /home/emi/shell.sh' - emi
+
+echo 'Rebooting the server to finish installation...'
+sudo reboot
