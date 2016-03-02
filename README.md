@@ -8,7 +8,7 @@ To run this web application locally on your computer, all you need is Python
 2.7.x where x >= 10, and [virtualenv]
 (http://docs.python-guide.org/en/latest/dev/virtualenvs/). In theory, the 
 following commands should then allow you to run the development version of the
-application on `http://localhost:8000`:
+application on http://localhost:8000:
 
 ```bash
 # Clone the git repository:
