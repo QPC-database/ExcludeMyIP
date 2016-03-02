@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2">
+			<div class="alert alert-danger" role="alert">
+				<p>
+					{% block message %}{% endblock %}Please try again.
+				</p>
+			</div>
+		</div>
+		<div class="col-lg-12 text-center">
+			<a class="btn btn-lg btn-success"
+				 href="{% url 'public:install' %}">Try again</a>
+		</div>
+	</div>
+{% endblock %}

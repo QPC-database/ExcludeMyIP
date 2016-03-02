@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block home_nav %}class="active"{% endblock %}
+
+{% block content %}
+
+	<div class="jumbotron">
+		<h1>Exclude your IP from Google Analytics</h1>
+		<p class="lead">
+			Click the button below to exclude your IP <strong>{{ ip }}</strong>
+			from Google Analytics.
+		</p>
+		<p>
+			<a class="btn btn-lg btn-success" href="{% url 'public:install' %}"
+				 role="button">Exclude my IP</a>
+		</p>
+		<p>
+			<small>
+				This service is free and
+				<a href="https://github.com/mherrmann/ExcludeMyIP">open source</a>.
+				We do not store your data.
+			</small>
+		</p>
+	</div>
+
+{% endblock %}

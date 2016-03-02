@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="row">
+		<div class="col col-lg-8 col-lg-offset-2 hidden">
+			<div class="alert alert-danger" id="error-alert">
+				Unfortunately an error occurred. Please try again.
+			</div>
+		</div>
+		<div class="col col-lg-8 col-lg-offset-2">
+			<p>
+				Please select the Google Analytics accounts for which you would like to
+				exclude the IP <strong>{{ ip }}</strong>:
+			</p>
+		</div>
+		<form id="form" action="{% url 'public:install_complete' %}">
+			{% csrf_token %}
+			<div class="col col-lg-7 col-lg-offset-3">
+				{% for account in accounts %}
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="accounts"
+										 value="{{account.id}}" checked="checked">
+							{{account.name}}
+						</label>
+					</div>
+				{% endfor %}
+			</div>
+			<div class="col col-lg-1 col-lg-offset-7">
+				<button id="submit" type="button" class="btn btn-success">
+					Exclude IP
+					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true">
+					</span>
+				</button>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			var button = $("#submit");
+			var errorAlertContainer = $("#error-alert").parent();
+			var form = $("#form");
+			var progressAnimInterval;
+			button.click(function() {
+				if (button.hasClass('disabled'))
+					return;
+				button.addClass('disabled');
+				var progressText = 'Creating filter';
+				button.html(progressText);
+				var numDots = 0;
+				progressAnimInterval = setInterval(function() {
+					button.html(progressText + ".".repeat(numDots));
+					numDots = (numDots + 1) % 4;
+				}, 400);
+				button.blur();
+				$.post(form.attr('action'), form.serialize(),
+					function success(url) {
+						window.location.href = url;
+					}
+				).fail(function() {
+					errorAlertContainer.removeClass('hidden');
+					button.removeClass('disabled');
+					clearInterval(progressAnimInterval);
+					button.html(
+							'Try again' +
+							'<span class="glyphicon glyphicon-chevron-right" ' +
+								'aria-hidden="true">' +
+							'</span>'
+					);
+				});
+			});
+		});
+	</script>
+{% endblock %}

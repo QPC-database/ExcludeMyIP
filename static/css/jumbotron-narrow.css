@@ -6,7 +6,6 @@ body {
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
-.marketing,
 .footer {
   padding-right: 15px;
   padding-left: 15px;
@@ -61,11 +60,6 @@ body {
   font-size: 21px;
 }
 
-/* Supporting marketing content */
-.marketing {
-  margin: 15px 0;
-}
-
 .alert ul {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -75,16 +69,10 @@ body {
 	border: none;
 }
 
-.more-margin-top {
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
   .header,
-  .marketing,
   .footer {
     padding-right: 0;
     padding-left: 0;

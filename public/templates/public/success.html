@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="row">
+		{% if installed %}
+			<div class="col-lg-10 col-lg-offset-1">
+				<div class="alert alert-success" role="alert">
+					<p>
+						Created / updated IP exclusion filter for the following accounts:
+					</p>
+					<ul>
+						{% for account in installed %}
+							<li>{{ account.name }}</li>
+						{% endfor %}
+					</ul>
+					<p>
+						You can see this in Google Analytics under
+						<i>Admin / All Filters</i>.
+					</p>
+				</div>
+			</div>
+		{% endif %}
+		{% if failed %}
+			<div class="col-lg-10 col-lg-offset-1">
+				<div class="alert alert-danger" role="alert">
+					<p>
+						Failed to create / update IP exclusion filter for these accounts:
+					</p>
+					<ul>
+						{% for account, reason in failed %}
+							<li>
+								{{ account.name }}
+								{% if reason %}({{ reason }}){% endif %}
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		{% endif %}
+		{% if installed %}
+			<div class="col-lg-10 col-lg-offset-1">
+				<div class="alert alert-warning" role="alert">
+					<strong>Please note:</strong>
+					Filters only apply to <strong>future</strong> visits. So your old
+					reports will still look the same. You should get no entries from your
+					IP <i>from now on</i>.
+				</div>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Exclude my IP from Google Analytics (open source tool)</title>
+	<link rel="stylesheet"
+				href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+				integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+				crossorigin="anonymous">
+	<link href="{% static 'css/jumbotron-narrow.css' %}" rel="stylesheet">
+	<script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+					integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+					crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+	<div class="header clearfix">
+		<nav>
+			<ul class="nav nav-pills pull-right">
+				<li role="presentation" {% block home_nav %}{% endblock %}>
+					<a href="{% url 'public:index' %}">Home</a>
+				</li>
+				<li role="presentation" {% block contact_nav %}{% endblock %}>
+					<a href="{% url 'public:about' %}">About</a>
+				</li>
+			</ul>
+		</nav>
+		<h3 class="home">
+			<a href="{% url 'public:index' %}">ExcludeMyIP</a>
+		</h3>
+	</div>
+
+	{% block content %}{% endblock %}
+
+	<footer class="footer">
+		<p>
+			Made with ♥ by <a href="http://herrmann.io">Michael Herrmann</a>. Source
+			code available on
+			<a href="https://github.com/mherrmann/ExcludeMyIP">GitHub</a>.
+		</p>
+	</footer>
+</div>
+</body>
+</html>

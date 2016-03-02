@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block contact_nav %}class="active"{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-lg-4 col-lg-offset-4">
+		<div class="thumbnail no-border">
+			<img src="{% static 'public/img/michael-herrmann.png' %}">
+		</div>
+	</div>
+	<div class="col-lg-10 col-lg-offset-1">
+		<p>
+			Thank you for your interest in this project! My name is Michael
+			Herrmann, I am the creator of this service. If you have any feedback or
+			questions, you can reach me by email at
+			<a href="mailto:michael@herrmann.io">michael@herrmann.io</a>. For more
+			information about me, you can also visit my personal web site at
+			<a href="www.herrmann.io">www.herrmann.io</a>. I look forward to
+			hearing from you!
+		</p>
+	</div>
+</div>
+{% endblock %}
