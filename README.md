@@ -5,7 +5,7 @@ starting point for creating your own web application utilizing Google APIs.
 
 ## Development
 To run this web application locally on your computer, all you need is Python
-2.7.x where `x >= 10`, and [virtualenv]
+2.7.x where x >= 10, and [virtualenv]
 (http://docs.python-guide.org/en/latest/dev/virtualenvs/). In theory, the 
 following commands should then allow you to run the development version of the
 application on `http://localhost:8000`:
@@ -14,7 +14,7 @@ application on `http://localhost:8000`:
 # Clone the git repository:
 git clone https://github.com/mherrmann/ExcludeMyIP.git
 cd ExcludeMyIP/
-# Create virtual environment in venv/ (ensure `python` is Python 2.7 not 3.x):
+# Create virtual environment in venv/ (ensure `python` is Python 2.7 not 3.x!):
 python -m virtualenv venv
 # Activate virtual environment:
 source venv/bin/activate
@@ -48,8 +48,14 @@ Analytics-related functionality of this web application.
 This web application can be deployed on a bare Ubuntu 14.04 installation
 by copying the script `bin/install.sh` to the server and executing it as root.
 You will need to edit the global variables defined at the top of the script
-to match your environment. Please also note that the current configuration
-throughout the code base assumes that the server runs on domain
-`www.excludemyip.com`. If you want to run it on a different domain, you need
-to replace all occurrences of `excludemyip.com` in the code base with your
-domain.
+to match your environment. As in *Development* above, you then need to upload
+your `google_api_credentials.json` file to the `public` directory in the checked
+out source directory on the server.
+
+Please note that the current configuration throughout the code base assumes that
+the server runs on domain `www.excludemyip.com`. If you want to run it on a
+different domain, you need to replace all occurrences of `excludemyip.com` in
+the code base with your domain. Finally, you also need to add
+`https://www.yourdomain.com/install/callback` to the *Authorized redirect URIs*
+in the *Credentials* section of the Google Developers Console, next to
+`http://localhost:8000/install/callback` which you created in Step 4. above.
