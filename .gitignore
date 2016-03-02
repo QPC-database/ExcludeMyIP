@@ -5,3 +5,4 @@ db.sqlite3
 static-collected/
 emi/secret_key.py
 conf/postfix/sasl_passwd
+conf/google_api_credentials.json
