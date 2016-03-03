@@ -9,6 +9,7 @@ from StringIO import StringIO
 from traceback import print_exc
 
 import logging
+import re
 
 _LOG = logging.getLogger(__name__)
 
@@ -67,7 +68,8 @@ def install_complete(request):
 				future.result()
 			except Exception as e:
 				if isinstance(e, GoogleApiException):
-					reason = e.reason
+					# Turn "camelCaseError" into "camel case error":
+					reason = re.sub('([A-Z])', r' \1', e.reason).lower()
 				else:
 					reason = ''
 				traceback = StringIO()
