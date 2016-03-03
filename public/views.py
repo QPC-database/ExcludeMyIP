@@ -1,7 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from django.core.mail import mail_admins
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from ipware.ip import get_ip
 from public.analytics_api import get_flow, get_ga_service, GoogleApiException
@@ -49,11 +49,16 @@ def no_account(request):
 	return render(request, 'public/errors/no_account.html')
 
 def install_complete(request):
+	filter_name = request.POST.get('filter-name', '')
+	if not filter_name:
+		return JsonResponse({'success': False})
 	account_ids = request.POST.getlist('accounts')
 	installed, failed, failed_reasons = [], [], []
 	with ThreadPoolExecutor(max_workers=3) as executor:
 		futures = [
-			executor.submit(_install_or_update_filter, request, account_id)
+			executor.submit(
+				_install_or_update_filter, request, account_id, filter_name
+			)
 			for account_id in account_ids
 		]
 		for i, future in enumerate(as_completed(futures)):
@@ -79,15 +84,18 @@ def install_complete(request):
 	request.session['installed'] = installed
 	request.session['failed'] = failed
 	request.session['failed_reasons'] = failed_reasons
-	return HttpResponse(reverse('public:install_success'))
+	return JsonResponse({
+		'success': True,
+		'url': reverse('public:install_success')
+	})
 
-def _install_or_update_filter(request, account_id):
+def _install_or_update_filter(request, account_id, filter_name):
 	account = _get_ga_service(request).get_account(account_id)
 	filters = account.get_filters()
 	filters_with_name = [
-		filter_ for filter_ in filters if filter_.name == _FILTER_NAME
+		filter_ for filter_ in filters if filter_.name == filter_name
 	]
-	args = (_FILTER_NAME, 'GEO_IP_ADDRESS', get_ip(request), 'GEO_IP_ADDRESS')
+	args = (filter_name, 'GEO_IP_ADDRESS', get_ip(request), 'GEO_IP_ADDRESS')
 	if filters_with_name:
 		for filter_ in filters_with_name:
 			filter_.make_exclude_filter(*args)
@@ -96,8 +104,6 @@ def _install_or_update_filter(request, account_id):
 		for property_ in account.get_properties():
 			for view in property_.get_views():
 				view.apply_filter(filter_)
-
-_FILTER_NAME = 'Home IP (via excludemyip.com)'
 
 def install_success(request):
 	service = _get_ga_service(request)

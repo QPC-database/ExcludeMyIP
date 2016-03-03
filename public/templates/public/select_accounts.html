@@ -2,12 +2,12 @@
 
 {% block content %}
 	<div class="row">
-		<div class="col col-lg-8 col-lg-offset-2 hidden">
+		<div class="col-lg-8 col-lg-offset-2 hidden">
 			<div class="alert alert-danger" id="error-alert">
 				Unfortunately an error occurred. Please try again.
 			</div>
 		</div>
-		<div class="col col-lg-8 col-lg-offset-2">
+		<div class="col-lg-8 col-lg-offset-2">
 			<p>
 				Please select the Google Analytics accounts for which you would like to
 				exclude the IP <strong>{{ ip }}</strong>:
@@ -15,23 +15,41 @@
 		</div>
 		<form id="form" action="{% url 'public:install_complete' %}">
 			{% csrf_token %}
-			<div class="col col-lg-7 col-lg-offset-3">
-				{% for account in accounts %}
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" name="accounts"
-										 value="{{account.id}}" checked="checked">
-							{{account.name}}
-						</label>
-					</div>
-				{% endfor %}
+			<div class="form-group">
+				<div class="col-lg-7 col-lg-offset-3">
+					{% for account in accounts %}
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" name="accounts"
+											 value="{{account.id}}" checked="checked">
+								{{account.name}}
+							</label>
+						</div>
+					{% endfor %}
+				</div>
 			</div>
-			<div class="col col-lg-1 col-lg-offset-7">
-				<button id="submit" type="button" class="btn btn-success">
-					Exclude IP
-					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true">
+			<div class="form-group">
+				<div class="col-lg-8 col-lg-offset-2">
+					<p>
+						Please pick a name for the IP exclusion filter:
+					</p>
+					<label for="filter-name" class="sr-only">Filter name</label>
+					<input type="text" class="form-control" id="filter-name"
+								 name="filter-name" value="Work IP (via excludemyip.com)">
+					<span class="help-block hidden" id="name-help">
+						Name can't be empty.
 					</span>
-				</button>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-lg-1 col-lg-offset-7">
+					<button id="submit" type="button"
+									class="btn btn-success more-margin-top">
+						Exclude IP
+						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true">
+						</span>
+					</button>
+				</div>
 			</div>
 		</form>
 	</div>
@@ -54,8 +72,22 @@
 				}, 400);
 				button.blur();
 				$.post(form.attr('action'), form.serialize(),
-					function success(url) {
-						window.location.href = url;
+					function success(data) {
+						if (data.success)
+							window.location.href = data.url;
+						else {
+							form.find('#filter-name').closest('.form-group')
+									.addClass('has-error');
+							form.find('#name-help').removeClass('hidden');
+							button.removeClass('disabled');
+							clearInterval(progressAnimInterval);
+							button.html(
+									'Exclude IP' +
+									'<span class="glyphicon glyphicon-chevron-right" ' +
+										'aria-hidden="true">' +
+									'</span>'
+							);
+						}
 					}
 				).fail(function() {
 					errorAlertContainer.removeClass('hidden');
