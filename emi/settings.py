@@ -148,3 +148,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (join(BASE_DIR, "static"),)
+
+ADMINS = (('Michael Herrmann', 'michael@herrmann.io'),)
+MANAGERS = ADMINS
+
+# Email settings:
+DEFAULT_FROM_EMAIL = 'michael@herrmann.io'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+EMAIL_SUBJECT_PREFIX = 'ExcludeMyIP '
