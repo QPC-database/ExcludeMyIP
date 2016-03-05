@@ -14,7 +14,8 @@ if not exists(LOG_DIR):
 LOGGING['handlers']['default'] = {
 	'level': 'INFO',
 	'class': 'logging.FileHandler',
-	'filename': join(LOG_DIR, 'django.log')
+	'filename': join(LOG_DIR, 'django.log'),
+	'formatter': 'default'
 }
 
 DEBUG = False

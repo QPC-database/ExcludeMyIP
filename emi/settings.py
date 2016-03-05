@@ -37,8 +37,14 @@ LOGGING = {
 		'default': {
 			'level': 'INFO',
 			'class': 'logging.StreamHandler',
-			'stream': sys.stderr
+			'stream': sys.stderr,
+			'formatter': 'default'
 		},
+	},
+	'formatters': {
+		'default': {
+			'format': '[%(asctime)s: %(levelname)s/%(funcName)s] %(message)s'
+		}
 	},
 	'loggers': {
 		'': {
