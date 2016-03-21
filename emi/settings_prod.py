@@ -20,14 +20,6 @@ LOGGING['handlers']['default'] = {
 
 DEBUG = False
 
-MIDDLEWARE_CLASSES.append(
-	'django.middleware.common.BrokenLinkEmailsMiddleware'
-)
-
-IGNORABLE_404_URLS = [
-	re.compile(r'^/favicon\.ico$')
-]
-
 # Use Postfix:
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
