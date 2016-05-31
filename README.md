@@ -1,7 +1,7 @@
 # ExcludeMyIP
-A Google Analytics tool to exclude your own (home/work) IP. See it live at
-www.excludemyip.com. The source code of this project may also serve as a good
-starting point for creating your own web application utilizing Google APIs.
+A Google Analytics tool to exclude your own (home/work) IP. The source code of
+this project may also serve as a good starting point for creating your own web
+application utilizing Google APIs.
 
 ## Development
 To run this web application locally on your computer, all you need is Python
